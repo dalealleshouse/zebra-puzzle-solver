@@ -1,15 +1,15 @@
 # Zebra Puzzle Solver
 
 This is an exercise in programming complex logic. Although primarily intended
-for entertainment, it provides a solid examples of best practices for solving
+for entertainment, it provides solid examples of best practices for solving
 problems with code.
 
 ## The Puzzle
 
 There are several different version of the Zebra Puzzle (aka Einstein's
-puzzle). The solution provided in the repository are flexible enough to solve them
-all. However, the goal is the most difficult version of the puzzle as shown
-below.
+puzzle). The solutions provided in the repository are flexible enough to solve
+them all. However, the goal is the most difficult version of the puzzle as
+shown below.
 
 1. There are five houses.
 1. The Englishman lives in the red house.
