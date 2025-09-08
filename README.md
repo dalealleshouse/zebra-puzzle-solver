@@ -1,13 +1,14 @@
 # Zebra Puzzle Solver
 
-This is an exercise in programming complex logic. Although primarily intended for entertainment, it provides solid
-examples of best practices for solving problems with code.
+This is an exercise in programming complex logic. Although primarily intended
+for entertainment, it provides solid examples of best practices for solving
+problems with code.
 
 ## The Puzzle
 
-There are several different version of the Zebra Puzzle (aka Einstein's puzzle). The solutions provided in the
-repository are flexible enough to solve them all. However, the goal is the most difficult version of the puzzle as
-shown below.
+There are several different version of the Zebra Puzzle (aka Einstein's puzzle).
+The solutions provided in the repository are flexible enough to solve them all.
+However, the goal is the most difficult version of the puzzle as shown below.
 
 1. There are five houses.
 1. The Englishman lives in the red house.
@@ -27,8 +28,10 @@ shown below.
 
 Now, who drinks water? Who owns the zebra?
 
-In the interest of clarity, it must be added that each of the five houses is painted a different color, and their
-inhabitants are of different national extractions, own different pets, drink different beverages and smoke different
-brands of American cigarets [sic]. One other thing: in statement 6, right means your right.
+In the interest of clarity, it must be added that each of the five houses is
+painted a different color, and their inhabitants are of different national
+extractions, own different pets, drink different beverages and smoke different
+brands of American cigarets [sic]. One other thing: in statement 6, right means
+your right.
 
 — Life International, December 17, 1962 ([WikiPedia](https://en.wikipedia.org/wiki/Zebra_Puzzle))
