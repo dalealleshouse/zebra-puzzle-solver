@@ -1,0 +1,45 @@
+tokens/
+
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# dotenv environment variables
+.env
+.env.*
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Redis dump files (if persisted)
+dump.rdb
+appendonly.aof
+
+# Docker-related
+docker-compose.override.yml
+*.pid
+
+# Coverage & test outputs
+coverage/
+nyc_output/
+jest-html-reporters-
+
+
+dist/
+portal-manifests
+
+redis-ironbank.tar
+
