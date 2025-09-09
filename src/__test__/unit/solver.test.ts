@@ -1,32 +1,27 @@
-import { House, rules, solveZebra } from '../../.';
-import { Cigarettes, Colors, Drinks, Nationality, Pets } from '../../variables';
-
-describe.skip('solver should', () => {
-  it('should return known solution to problem', () => {
-    const result = solveZebra(rules);
-
-    expect(result).toEqual([
-      new House(
-        1,
-
-        Colors.Yellow,
-        Nationality.Norwegian,
-        Cigarettes.Kools,
-        Drinks.Water,
-        Pets.Fox
-      ),
-    ]);
-  });
-});
+import {
+  Cigarette,
+  Cigarettes,
+  Color,
+  Colors,
+  Drink,
+  Drinks,
+  House,
+  Nationalities,
+  Nationality,
+  Pet,
+  Pets,
+  rules,
+  solveZebra,
+} from '../../.';
 
 const uniq = <T>(arr: T[]) => new Set(arr).size === arr.length;
 
 function maps(houses: House[]) {
-  const posByColor: Record<number, number> = {};
-  const posByNat: Record<number, number> = {};
-  const posByCig: Record<number, number> = {};
-  const posByDrink: Record<number, number> = {};
-  const posByPet: Record<number, number> = {};
+  const posByColor: Record<Color, number> = {};
+  const posByNat: Record<Nationality, number> = {};
+  const posByCig: Record<Cigarette, number> = {};
+  const posByDrink: Record<Drink, number> = {};
+  const posByPet: Record<Pet, number> = {};
 
   for (const h of houses) {
     posByColor[h.color] = h.houseNumber;
@@ -68,15 +63,15 @@ describe('Zebra solver (invariants)', () => {
   // Anchors
   it('milk is drunk in the middle house; Norwegian lives in the first house', () => {
     expect(m.posByDrink[Drinks.Milk]).toBe(3);
-    expect(m.posByNat[Nationality.Norwegian]).toBe(1);
+    expect(m.posByNat[Nationalities.Norwegian]).toBe(1);
   });
 
   // Simple pairwise equivalences
   it('Englishman ↔ Red, Spaniard ↔ Dog, Coffee ↔ Green, Ukrainian ↔ Tea', () => {
-    expect(m.posByNat[Nationality.Englishman]).toBe(m.posByColor[Colors.Red]);
-    expect(m.posByNat[Nationality.Spaniard]).toBe(m.posByPet[Pets.Dog]);
+    expect(m.posByNat[Nationalities.Englishman]).toBe(m.posByColor[Colors.Red]);
+    expect(m.posByNat[Nationalities.Spaniard]).toBe(m.posByPet[Pets.Dog]);
     expect(m.posByDrink[Drinks.Coffee]).toBe(m.posByColor[Colors.Green]);
-    expect(m.posByNat[Nationality.Ukrainian]).toBe(m.posByDrink[Drinks.Tea]);
+    expect(m.posByNat[Nationalities.Ukrainian]).toBe(m.posByDrink[Drinks.Tea]);
   });
 
   it('Old Gold ↔ Snails, Kools ↔ Yellow, Lucky Strike ↔ Orange Juice, Japanese ↔ Parliaments', () => {
@@ -85,7 +80,7 @@ describe('Zebra solver (invariants)', () => {
     expect(m.posByCig[Cigarettes.LuckyStrike]).toBe(
       m.posByDrink[Drinks.OrangeJuice]
     );
-    expect(m.posByNat[Nationality.Japanese]).toBe(
+    expect(m.posByNat[Nationalities.Japanese]).toBe(
       m.posByCig[Cigarettes.Parliaments]
     );
   });
@@ -104,7 +99,7 @@ describe('Zebra solver (invariants)', () => {
       Math.abs(m.posByCig[Cigarettes.Kools] - m.posByPet[Pets.Horse])
     ).toBe(1);
     expect(
-      Math.abs(m.posByNat[Nationality.Norwegian] - m.posByColor[Colors.Blue])
+      Math.abs(m.posByNat[Nationalities.Norwegian] - m.posByColor[Colors.Blue])
     ).toBe(1);
   });
 
@@ -120,7 +115,7 @@ describe('Zebra solver (invariants)', () => {
     )!.nationality;
 
     // Canonical for the classic set:
-    expect(whoDrinksWater).toBe(Nationality.Norwegian);
-    expect(whoOwnsZebra).toBe(Nationality.Japanese);
+    expect(whoDrinksWater).toBe(Nationalities.Norwegian);
+    expect(whoOwnsZebra).toBe(Nationalities.Japanese);
   });
 });

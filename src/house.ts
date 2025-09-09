@@ -1,71 +1,68 @@
-import * as vars from './variables';
+import { Cigarette, Color, Drink, HouseNumber, Nationality, Pet } from '.';
 
 export class House {
   constructor(
-    public readonly houseNumber: number,
-    public readonly color: vars.Colors,
-    public readonly nationality: vars.Nationality,
-    public readonly cigarettes: vars.Cigarettes,
-    public readonly drink: vars.Drinks,
-    public readonly pet: vars.Pets
+    public readonly houseNumber: HouseNumber,
+    public readonly color: Color,
+    public readonly nationality: Nationality,
+    public readonly cigarettes: Cigarette,
+    public readonly drink: Drink,
+    public readonly pet: Pet
   ) {}
 }
 
 type HouseState = {
-  houseNumber: number;
-  color: vars.Colors;
-  nationality: vars.Nationality;
-  cigarettes: vars.Cigarettes;
-  drink: vars.Drinks;
-  pet: vars.Pets;
+  houseNumber: HouseNumber;
+  color: Color;
+  nationality: Nationality;
+  cigarettes: Cigarette;
+  drink: Drink;
+  pet: Pet;
 };
 
-const NULL_INIT: HouseState = {
-  houseNumber: 0,
-  color: vars.Colors.Invalid,
-  nationality: vars.Nationality.Invalid,
-  cigarettes: vars.Cigarettes.Invalid,
-  drink: vars.Drinks.Invalid,
-  pet: vars.Pets.Invalid,
-};
+type Draft = Partial<HouseState>;
 
-export const nullHouse = new House(
-  NULL_INIT.houseNumber,
-  NULL_INIT.color,
-  NULL_INIT.nationality,
-  NULL_INIT.cigarettes,
-  NULL_INIT.drink,
-  NULL_INIT.pet
-);
+function isComplete(d: Draft): d is HouseState {
+  return (
+    d.houseNumber !== undefined &&
+    d.color !== undefined &&
+    d.nationality !== undefined &&
+    d.cigarettes !== undefined &&
+    d.drink !== undefined &&
+    d.pet !== undefined
+  );
+}
 
 export class HouseBuilder {
-  private readonly state: House;
+  private readonly draft: Draft;
 
-  constructor(init?: Partial<House>) {
-    this.state = { ...NULL_INIT, ...init };
-  }
-
-  public houseNumber(houseNumber: number): HouseBuilder {
-    return new HouseBuilder({ ...this.state, houseNumber });
-  }
-  public color(color: vars.Colors): HouseBuilder {
-    return new HouseBuilder({ ...this.state, color });
-  }
-  public nationality(nationality: vars.Nationality): HouseBuilder {
-    return new HouseBuilder({ ...this.state, nationality });
-  }
-  public cigarettes(cigarettes: vars.Cigarettes): HouseBuilder {
-    return new HouseBuilder({ ...this.state, cigarettes });
-  }
-  public drink(drink: vars.Drinks): HouseBuilder {
-    return new HouseBuilder({ ...this.state, drink });
-  }
-  public pet(pet: vars.Pets): HouseBuilder {
-    return new HouseBuilder({ ...this.state, pet });
+  constructor(draft: Draft = {}) {
+    this.draft = draft;
   }
 
-  public build(): House {
-    const s = this.state;
+  houseNumber(houseNumber: HouseNumber) {
+    return new HouseBuilder({ ...this.draft, houseNumber });
+  }
+  color(color: Color) {
+    return new HouseBuilder({ ...this.draft, color });
+  }
+  nationality(n: Nationality) {
+    return new HouseBuilder({ ...this.draft, nationality: n });
+  }
+  cigarettes(c: Cigarette) {
+    return new HouseBuilder({ ...this.draft, cigarettes: c });
+  }
+  drink(d: Drink) {
+    return new HouseBuilder({ ...this.draft, drink: d });
+  }
+  pet(p: Pet) {
+    return new HouseBuilder({ ...this.draft, pet: p });
+  }
+
+  build(): House {
+    if (!isComplete(this.draft))
+      throw new Error('HouseBuilder: incomplete house');
+    const s = this.draft;
     return new House(
       s.houseNumber,
       s.color,
@@ -74,5 +71,9 @@ export class HouseBuilder {
       s.drink,
       s.pet
     );
+  }
+
+  static start(pos: HouseNumber) {
+    return new HouseBuilder({ houseNumber: pos });
   }
 }

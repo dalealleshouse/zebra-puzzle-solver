@@ -1,21 +1,23 @@
+// src/main.ts
 import { performance } from 'node:perf_hooks';
 
 import { House } from './house';
 import { rules } from './rules';
 import { solveZebra } from './solver';
-import * as vars from './variables';
+import { Drinks, Pets } from './variables';
 
-// Map numeric enum value -> readable name (TypeScript reverse mapping)
-const enumLabel = (e: any, v: number) => e[v];
+// re-exports from vocab
+
+const title = (s: string) => s.replace(/\b\w/g, c => c.toUpperCase());
 
 function rowFromHouse(h: House) {
   return [
     h.houseNumber,
-    enumLabel(vars.Colors, h.color),
-    enumLabel(vars.Nationality, h.nationality),
-    enumLabel(vars.Cigarettes, h.cigarettes),
-    enumLabel(vars.Drinks, h.drink),
-    enumLabel(vars.Pets, h.pet),
+    title(h.color),
+    title(h.nationality),
+    title(h.cigarettes),
+    title(h.drink),
+    title(h.pet),
   ];
 }
 
@@ -43,11 +45,11 @@ function main() {
   if (asJson) {
     const out = houses.map(h => ({
       houseNumber: h.houseNumber,
-      color: enumLabel(vars.Colors, h.color),
-      nationality: enumLabel(vars.Nationality, h.nationality),
-      cigarettes: enumLabel(vars.Cigarettes, h.cigarettes),
-      drink: enumLabel(vars.Drinks, h.drink),
-      pet: enumLabel(vars.Pets, h.pet),
+      color: h.color,
+      nationality: h.nationality,
+      cigarettes: h.cigarettes,
+      drink: h.drink,
+      pet: h.pet,
     }));
     console.log(
       JSON.stringify({ houses: out, ms: +(t1 - t0).toFixed(3) }, null, 2)
@@ -57,16 +59,12 @@ function main() {
 
   printTable(houses);
 
-  const waterDrinker = houses.find(h => h.drink === vars.Drinks.Water)!;
-  const zebraOwner = houses.find(h => h.pet === vars.Pets.Zebra)!;
+  const waterDrinker = houses.find(h => h.drink === Drinks.Water)!;
+  const zebraOwner = houses.find(h => h.pet === Pets.Zebra)!;
 
   console.log('');
-  console.log(
-    `Water is drunk by the ${enumLabel(vars.Nationality, waterDrinker.nationality)}.`
-  );
-  console.log(
-    `The zebra is owned by the ${enumLabel(vars.Nationality, zebraOwner.nationality)}.`
-  );
+  console.log(`Water is drunk by the ${title(waterDrinker.nationality)}.`);
+  console.log(`The zebra is owned by the ${title(zebraOwner.nationality)}.`);
   console.log(`\nSolved in ${(t1 - t0).toFixed(3)} ms.`);
 }
 

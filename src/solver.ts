@@ -1,51 +1,17 @@
 // src/solver.ts
-import { House } from './house';
+import {
+  CIGARETTES,
+  COLORS,
+  DRINKS,
+  House,
+  HouseNumber,
+  NATIONALITIES,
+  PETS,
+} from './';
 import type { Rule } from './rules';
-import * as vars from './variables';
-
-// Enumerate valid values (exclude the enum's Invalid = 0)
-const COLORS = [
-  vars.Colors.Red,
-  vars.Colors.Green,
-  vars.Colors.Blue,
-  vars.Colors.Ivory,
-  vars.Colors.Yellow,
-] as const;
-
-const NATIONALITIES = [
-  vars.Nationality.Englishman,
-  vars.Nationality.Spaniard,
-  vars.Nationality.Ukrainian,
-  vars.Nationality.Norwegian,
-  vars.Nationality.Japanese,
-] as const;
-
-const CIGARETTES = [
-  vars.Cigarettes.OldGold,
-  vars.Cigarettes.Kools,
-  vars.Cigarettes.Chesterfields,
-  vars.Cigarettes.LuckyStrike,
-  vars.Cigarettes.Parliaments,
-] as const;
-
-const DRINKS = [
-  vars.Drinks.Coffee,
-  vars.Drinks.Tea,
-  vars.Drinks.Milk,
-  vars.Drinks.OrangeJuice,
-  vars.Drinks.Water,
-] as const;
-
-const PETS = [
-  vars.Pets.Dog,
-  vars.Pets.Snail,
-  vars.Pets.Fox,
-  vars.Pets.Horse,
-  vars.Pets.Zebra,
-] as const;
 
 // Generate all single-house candidates for a specific position (1..5)
-function candidatesForPosition(pos: number): House[] {
+function candidatesForPosition(pos: HouseNumber): House[] {
   const out: House[] = [];
   for (const color of COLORS)
     for (const nationality of NATIONALITIES)
@@ -92,7 +58,7 @@ function allRulesHoldForAll(partial: House[], rules: Rule[]): boolean {
 export function solveZebra(rules: Rule[]): House[] {
   // Precompute candidate sets per position
   const byPos: House[][] = Array.from({ length: 5 }, (_, i) =>
-    candidatesForPosition(i + 1)
+    candidatesForPosition((i + 1) as HouseNumber)
   );
 
   const solution: House[] = [];

@@ -1,5 +1,5 @@
 import { House } from './house';
-import * as vars from './variables';
+import { Cigarettes, Colors, Drinks, Nationalities, Pets } from './variables';
 
 export type Rule = (house: House, allHouses: House[]) => boolean;
 
@@ -30,21 +30,20 @@ export const standardRule = (vh: PartialPair): Rule => {
 
 // “Green is immediately to the right of Ivory.”
 export const greenHouseRightOfIvoryHouse: Rule = (house, all) => {
-  if (house.color !== vars.Colors.Green && house.color !== vars.Colors.Ivory)
-    return true;
+  if (house.color !== Colors.Green && house.color !== Colors.Ivory) return true;
 
-  if (house.color === vars.Colors.Green) {
+  if (house.color === Colors.Green) {
     if (house.houseNumber === 1) return false; // can't have ivory to the left
     const left = all.find(h => h.houseNumber === house.houseNumber - 1);
     if (!left) return true; // neighbor not placed yet → defer
-    return left.color === vars.Colors.Ivory; // must be ivory to the left
+    return left.color === Colors.Ivory; // must be ivory to the left
   }
 
   // house is Ivory
   if (house.houseNumber === 5) return false; // can't have green to the right
   const right = all.find(h => h.houseNumber === house.houseNumber + 1);
   if (!right) return true; // neighbor not placed yet → defer
-  return right.color === vars.Colors.Green; // must be green to the right
+  return right.color === Colors.Green; // must be green to the right
 };
 
 // “A next to B” where A/B are two attributes on adjacent houses.
@@ -116,68 +115,68 @@ export const nextToRule = (vh: PartialPair): Rule => {
 /* -------------------- Classic Zebra ruleset -------------------- */
 
 const englishmanLivesInRedHouse = standardRule({
-  nationality: vars.Nationality.Englishman,
-  color: vars.Colors.Red,
+  nationality: Nationalities.Englishman,
+  color: Colors.Red,
 });
 
 const spaniardOwnsDog = standardRule({
-  nationality: vars.Nationality.Spaniard,
-  pet: vars.Pets.Dog,
+  nationality: Nationalities.Spaniard,
+  pet: Pets.Dog,
 });
 
 const coffeeInGreenHouse = standardRule({
-  drink: vars.Drinks.Coffee,
-  color: vars.Colors.Green,
+  drink: Drinks.Coffee,
+  color: Colors.Green,
 });
 
 const ukrainianDrinksTea = standardRule({
-  nationality: vars.Nationality.Ukrainian,
-  drink: vars.Drinks.Tea,
+  nationality: Nationalities.Ukrainian,
+  drink: Drinks.Tea,
 });
 
 const oldGoldOwnsSnails = standardRule({
-  cigarettes: vars.Cigarettes.OldGold,
-  pet: vars.Pets.Snail,
+  cigarettes: Cigarettes.OldGold,
+  pet: Pets.Snail,
 });
 
 const koolsInYellowHouse = standardRule({
-  cigarettes: vars.Cigarettes.Kools,
-  color: vars.Colors.Yellow,
+  cigarettes: Cigarettes.Kools,
+  color: Colors.Yellow,
 });
 
 const milkInMiddleHouse = standardRule({
-  drink: vars.Drinks.Milk,
+  drink: Drinks.Milk,
   houseNumber: 3,
 });
 
 const norwegianInFirstHouse = standardRule({
-  nationality: vars.Nationality.Norwegian,
+  nationality: Nationalities.Norwegian,
   houseNumber: 1,
 });
 
 const luckyStrikeDrinksOrangeJuice = standardRule({
-  cigarettes: vars.Cigarettes.LuckyStrike,
-  drink: vars.Drinks.OrangeJuice,
+  cigarettes: Cigarettes.LuckyStrike,
+  drink: Drinks.OrangeJuice,
 });
 
 const japaneseSmokesParliament = standardRule({
-  nationality: vars.Nationality.Japanese,
-  cigarettes: vars.Cigarettes.Parliaments,
+  nationality: Nationalities.Japanese,
+  cigarettes: Cigarettes.Parliaments,
 });
 
 const chesterfieldNextToFox = nextToRule({
-  cigarettes: vars.Cigarettes.Chesterfields,
-  pet: vars.Pets.Fox,
+  cigarettes: Cigarettes.Chesterfields,
+  pet: Pets.Fox,
 });
 
 const koolNextToHorse = nextToRule({
-  cigarettes: vars.Cigarettes.Kools,
-  pet: vars.Pets.Horse,
+  cigarettes: Cigarettes.Kools,
+  pet: Pets.Horse,
 });
 
 const norwegianNextToBlue = nextToRule({
-  nationality: vars.Nationality.Norwegian,
-  color: vars.Colors.Blue,
+  nationality: Nationalities.Norwegian,
+  color: Colors.Blue,
 });
 
 export const rules: Rule[] = [
