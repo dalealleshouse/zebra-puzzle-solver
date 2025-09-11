@@ -25,13 +25,6 @@ function candidatesForPosition(pos: HouseNumber): House[] {
   return out;
 }
 
-// Optional helper: all candidates for all positions (useful for diagnostics)
-// export function allPossibleHouses(): House[] {
-//   const all: House[] = [];
-//   for (let pos = 1; pos <= 5; pos++) all.push(...candidatesForPosition(pos));
-//   return all;
-// }
-
 // Enforce bijection across attributes (no repeats across the 5 houses)
 type UniqueKey = keyof Pick<
   House,
